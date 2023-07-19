@@ -9,7 +9,7 @@
     </div>
     <ul class="wrap_card">
       <li class="card" v-for="post in posts" :key="post.id">
-        <h3 class="card_name">{{ post.name }}</h3>
+        <h2 class="card_name">{{ post.name }}</h2>
         <img class="pic" v-if="post.photo" :src="post.photo" alt="photo" />
         <img class="pic" v-else src="./assets/noPhoto.webp" alt="photo" />
         <div class="card__overlay">
@@ -182,6 +182,7 @@ ul {
 
       .card_name {
         line-height: 1.7rem;
+        font-size: 1.1rem;
       }
 
       .card__overlay {
