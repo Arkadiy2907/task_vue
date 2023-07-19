@@ -153,6 +153,7 @@ ul {
       font-weight: bold;
 
       &:hover {
+        box-shadow: 0 0 0.5rem 0.4rem rgba(0, 128, 128, 0.29);
         background-color: $green;
         color: $white;
       }
@@ -193,13 +194,14 @@ ul {
         text-align: left;
         background-color: rgb(0, 128, 128, 0.7);
         transform: translateY(100%);
-        transition: 0.7s ease-in-out;
+        transition: all 0.7s ease-in-out;
         border-radius: 0.3rem;
         color: $white;
       }
 
       &:hover {
         border-radius: 0;
+        box-shadow: 0 0 0.5rem 0.4rem rgba(0, 128, 128, 0.29);
         .card__overlay {
           transform: translateY(0);
         }
@@ -207,7 +209,7 @@ ul {
 
       .pic {
         border-radius: 0.3rem;
-        transition: 0.5s ease-in-out;
+        transition: all 0.5s ease-in-out;
         object-fit: cover;
         height: 100%;
         width: 100%;
