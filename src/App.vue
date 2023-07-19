@@ -1,22 +1,55 @@
 <template>
   <div class="app">
-    <div class="all-btn">
-      <button class="btn" @click="getRundomPost">случайный выбор кафе</button>
-      <button class="btn" @click="fetchPosts">все варианты кафе</button>
+    <div class="header">
+      <h1>Выбирай лучшие кафе города:</h1>
+      <button class="header_btn" @click="getRundomPost">
+        случайный выбор кафе
+      </button>
+      <button class="header_btn" @click="fetchPosts">все варианты кафе</button>
     </div>
     <ul class="wrap_card">
       <li class="card" v-for="post in posts" :key="post.id">
-        <div><strong>Кафе:</strong> {{ post.name }}</div>
-        <img v-if="post.photo" :src="post.photo" alt="photo" />
-        <img v-else src="./assets/noPhoto.webp" alt="photo" />
+        <h3 class="card_name">{{ post.name }}</h3>
+        <img class="pic" v-if="post.photo" :src="post.photo" alt="photo" />
+        <img class="pic" v-else src="./assets/noPhoto.webp" alt="photo" />
         <div class="card__overlay">
-          <div><strong>Адрес:</strong> {{ post.address }}</div>
-          <div><strong>Ориентир:</strong> {{ post.landmark }}</div>
-          <div><strong>Кухня:</strong> {{ post.cuisine }}</div>
-          <div><strong>Расстояние:</strong> {{ post.distance }}</div>
-          <div><strong>Время:</strong> {{ post.time }}</div>
-          <div><strong>Бизнес ланч:</strong> {{ post.business_lunch }}</div>
-          <div><strong>Цена:</strong> {{ post.price }}</div>
+          <div v-if="post.address">
+            <strong>Адрес:&ensp;</strong> {{ post.address }}
+          </div>
+          <div v-else>
+            <strong>Адрес:&ensp;</strong><span>10-й проезд 7-го выезда</span>
+          </div>
+          <div v-if="post.landmark">
+            <strong>Ориентир:&ensp;</strong> {{ post.landmark }}
+          </div>
+          <div v-else>
+            <strong>Ориентир:&ensp;</strong
+            ><span>дерево такое и памятник мужик сидячий</span>
+          </div>
+          <div v-if="post.cuisine">
+            <strong>Кухня:&ensp;</strong> {{ post.cuisine }}
+          </div>
+          <div v-else>
+            <strong>Кухня:&ensp;</strong
+            ><span>мишленовская от Ашота Мишленованяна</span>
+          </div>
+          <div v-if="post.distance">
+            <strong>Расстояние:&ensp;</strong>{{ post.distance
+            }}<span>метров</span>
+            <div>
+              <strong>Время:&ensp;</strong> {{ post.time }}<span>минут</span>
+            </div>
+          </div>
+          <div v-else>
+            <strong>Расстояние:&ensp;</strong><span>тут не далеко</span>
+          </div>
+          <div v-if="post.business_lunch">
+            <strong>Бизнес ланч:&ensp;</strong><span>да есть</span>
+            <div><strong>Цена:</strong> {{ post.price }}<span>руб</span></div>
+          </div>
+          <div v-else>
+            <strong>Бизнес ланч:&ensp;</strong><span>пока нет</span>
+          </div>
         </div>
       </li>
     </ul>
@@ -83,6 +116,7 @@ export default {
 }
 
 $green: rgb(0, 128, 128);
+$white: rgb(255, 255, 255);
 
 ul {
   padding: 0;
@@ -90,14 +124,46 @@ ul {
 }
 
 .app {
-  padding: 20px;
+  padding: 1rem;
   color: $green;
+  font-family: sans-serif;
+  transition: all ease 0.8s;
+
+  .header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+
+    &:first-child {
+      color: red;
+    }
+
+    .header_btn {
+      margin: 1rem 1.5rem;
+      padding: 0.7rem 1.2rem;
+      background: none;
+      color: $green;
+      border: 1px solid $green;
+      transition: all ease 0.8s;
+      cursor: pointer;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: bold;
+
+      &:hover {
+        background-color: $green;
+        color: $white;
+      }
+    }
+  }
 
   .wrap_card {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 1rem;
 
     .card {
       position: relative;
@@ -110,6 +176,12 @@ ul {
       max-height: 21rem;
       padding: 0;
       text-align: center;
+      border-radius: 0.3rem;
+      transition: 0.7s ease-in-out;
+
+      .card_name {
+        line-height: 1.7rem;
+      }
 
       .card__overlay {
         position: absolute;
@@ -123,17 +195,18 @@ ul {
         transform: translateY(100%);
         transition: 0.7s ease-in-out;
         border-radius: 0.3rem;
-        color: white;
+        color: $white;
       }
 
       &:hover {
+        border-radius: 0;
         .card__overlay {
           transform: translateY(0);
         }
       }
 
-      img {
-        border-radius: 1rem;
+      .pic {
+        border-radius: 0.3rem;
         transition: 0.5s ease-in-out;
         object-fit: cover;
         height: 100%;
@@ -143,27 +216,6 @@ ul {
           transform: scale(1.009);
           border-radius: 0;
         }
-      }
-    }
-  }
-
-  .all-btn {
-    display: flex;
-    flex-wrap: wrap;
-
-    .btn {
-      margin: 15px 10px;
-      padding: 10px 15px;
-      background: none;
-      color: $green;
-      border: 1px solid $green;
-      transition: all ease 0.8s;
-      cursor: pointer;
-      border-radius: 10px;
-
-      &:hover {
-        background-color: $green;
-        color: white;
       }
     }
   }
