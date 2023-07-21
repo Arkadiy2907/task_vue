@@ -6,9 +6,17 @@
         случайный выбор кафе
       </button>
       <button class="header_btn" @click="fetchPosts">все варианты кафе</button>
+      <button class="header_btn" @click="sendSelectedObject">
+        отправить выбранное на почту
+      </button>
     </div>
     <ul class="wrap_card">
-      <li class="card" v-for="post in posts" :key="post.id">
+      <li
+        class="card"
+        v-for="post in posts"
+        :key="post.id"
+        @click="selectPost(post.id)"
+      >
         <h2 class="card_name">{{ post.name }}</h2>
         <img class="pic" v-if="post.photo" :src="post.photo" alt="photo" />
         <img class="pic" v-else src="./assets/noPhoto.webp" alt="photo" />
@@ -63,6 +71,7 @@ export default {
   data() {
     return {
       posts: [],
+      selectedPostId: "",
       name: "",
       address: "",
       landmark: "",
@@ -99,6 +108,24 @@ export default {
       } catch (e) {
         console.log("error message:", e.message);
       }
+    },
+
+    selectPost(id = null) {
+      this.selectedPostId = id;
+    },
+
+    sendSelectedObject() {
+      const selectedPost = this.posts.find(
+        (post) => post.id === this.selectedPostId
+      );
+      if (selectedPost === undefined) return;
+      const email = "example@example.com";
+      const subject = "Выбранный объект";
+      const body = `Название кафе: ${selectedPost?.name}; Адрес: ${selectedPost?.address};`;
+      const mailto_link =
+        "mailto:" + email + "?subject=" + subject + "&body=" + body;
+      // console.log(mailto_link);
+      window.open(mailto_link, "emailWindow");
     },
   },
 
