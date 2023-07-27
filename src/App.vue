@@ -65,22 +65,13 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   data() {
     return {
       posts: [],
-      selectedPostId: "",
-      name: "",
-      address: "",
-      landmark: "",
-      cuisine: "",
-      distance: "",
-      time: "",
-      photo: "",
-      business_lunch: "",
-      price: "",
+      selectedPostId: '',
     };
   },
 
@@ -88,11 +79,11 @@ export default {
     async fetchPosts() {
       try {
         const response = await axios.get(
-          "https://bandaumnikov.ru/api/test/site/get-index"
+          'https://bandaumnikov.ru/api/test/site/get-index'
         );
         this.posts = response?.data?.data;
       } catch (e) {
-        console.log("error message:", e.message);
+        console.log('error message:', e.message);
       }
     },
 
@@ -106,7 +97,7 @@ export default {
         const post = response?.data?.data;
         this.posts.push(post);
       } catch (e) {
-        console.log("error message:", e.message);
+        console.log('error message:', e.message);
       }
     },
 
@@ -119,13 +110,13 @@ export default {
         (post) => post.id === this.selectedPostId
       );
       if (selectedPost === undefined) return;
-      const email = "example@example.com";
-      const subject = "Выбранный объект";
+      const email = 'example@example.com';
+      const subject = 'Выбранный объект';
       const body = `Название кафе: ${selectedPost?.name}; Адрес: ${selectedPost?.address};`;
-      const mailto_link =
-        "mailto:" + email + "?subject=" + subject + "&body=" + body;
-      // console.log(mailto_link);
-      window.open(mailto_link, "emailWindow");
+      const mailto_link = `mailto:${email}?subject=${subject}&body=${body}`;
+      // 'mailto:' + email + '?subject=' + subject + '&body=' + body;
+      console.log(mailto_link);
+      // window.open(mailto_link, 'emailWindow');
     },
   },
 
