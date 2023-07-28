@@ -57,7 +57,6 @@ export default {
     },
 
     selectPost(id = null) {
-      console.log(id);
       this.selectedPostId = id;
     },
 

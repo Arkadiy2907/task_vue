@@ -5,6 +5,7 @@
       v-for="post in posts"
       :key="post.id"
       @click="selectPost(post.id)"
+      :class="{ selected: selectedPost === post.id }"
     >
       <h2 class="card_name">{{ post.name }}</h2>
       <img class="pic" v-if="post.photo" :src="post.photo" alt="photo" />
@@ -54,6 +55,12 @@
 
 <script>
 export default {
+  data() {
+    return {
+      selectedPost: null,
+    };
+  },
+
   props: {
     posts: {
       type: Array,
@@ -63,7 +70,13 @@ export default {
 
   methods: {
     selectPost(id) {
-      this.$emit('select', id);
+      if (this.selectedPost === id) {
+        this.$emit('select', null);
+        this.selectedPost = null;
+      } else {
+        this.$emit('select', id);
+        this.selectedPost = id;
+      }
     },
   },
 };
@@ -133,6 +146,10 @@ $white: rgb(255, 255, 255);
         border-radius: 0;
       }
     }
+  }
+
+  .selected {
+    border: 2px solid red;
   }
 }
 </style>
