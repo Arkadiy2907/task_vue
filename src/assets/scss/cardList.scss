@@ -1,0 +1,66 @@
+.wrap_card {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  .card {
+    position: relative;
+    overflow: hidden;
+    background: none;
+    cursor: pointer;
+    width: 21rem;
+    height: 21rem;
+    max-width: 21rem;
+    max-height: 21rem;
+    padding: 0;
+    text-align: center;
+    border-radius: 0.3rem;
+    transition: 0.7s ease-in-out;
+
+    .card_name {
+      line-height: 1.7rem;
+      font-size: 1.1rem;
+    }
+
+    .card__overlay {
+      position: absolute;
+      bottom: 0;
+      left: 4%;
+      right: 4%;
+      padding: 2%;
+      z-index: 1;
+      text-align: left;
+      background-color: rgb(0, 128, 128, 0.7);
+      transform: translateY(100%);
+      transition: all 0.7s ease-in-out;
+      border-radius: 0.3rem;
+      color: $white;
+    }
+
+    &:hover {
+      border-radius: 0;
+      box-shadow: 0 0 0.5rem 0.4rem rgba(0, 128, 128, 0.29);
+      .card__overlay {
+        transform: translateY(0);
+      }
+    }
+
+    .pic {
+      border-radius: 0.3rem;
+      transition: all 0.5s ease-in-out;
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+
+      &:hover {
+        transform: scale(1.009);
+        border-radius: 0;
+      }
+    }
+  }
+
+  .selected {
+    border: 2px solid red;
+  }
+}

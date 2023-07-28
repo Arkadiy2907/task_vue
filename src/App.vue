@@ -2,72 +2,27 @@
   <div class="app">
     <div class="header">
       <h1>Выбирай лучшие кафе города:</h1>
-      <button class="header_btn" @click="getRundomPost">
-        случайный выбор кафе
-      </button>
-      <button class="header_btn" @click="fetchPosts">все варианты кафе</button>
-      <button class="header_btn" @click="sendSelectedObject">
+      <my-button @click="getRundomPost">случайный выбор кафе</my-button>
+      <my-button @click="fetchPosts">все варианты кафе</my-button>
+      <my-button @click="sendSelectedObject">
         отправить выбранное на почту
-      </button>
+      </my-button>
     </div>
-    <ul class="wrap_card">
-      <li
-        class="card"
-        v-for="post in posts"
-        :key="post.id"
-        @click="selectPost(post.id)"
-      >
-        <h2 class="card_name">{{ post.name }}</h2>
-        <img class="pic" v-if="post.photo" :src="post.photo" alt="photo" />
-        <img class="pic" v-else src="./assets/noPhoto.webp" alt="photo" />
-        <div class="card__overlay">
-          <div v-if="post.address">
-            <strong>Адрес:&ensp;</strong> {{ post.address }}
-          </div>
-          <div v-else>
-            <strong>Адрес:&ensp;</strong><span>10-й проезд 7-го выезда</span>
-          </div>
-          <div v-if="post.landmark">
-            <strong>Ориентир:&ensp;</strong> {{ post.landmark }}
-          </div>
-          <div v-else>
-            <strong>Ориентир:&ensp;</strong
-            ><span>дерево такое и памятник мужик сидячий</span>
-          </div>
-          <div v-if="post.cuisine">
-            <strong>Кухня:&ensp;</strong> {{ post.cuisine }}
-          </div>
-          <div v-else>
-            <strong>Кухня:&ensp;</strong
-            ><span>мишленовская от Ашота Мишленованяна</span>
-          </div>
-          <div v-if="post.distance">
-            <strong>Расстояние:&ensp;</strong>{{ post.distance
-            }}<span>метров</span>
-            <div>
-              <strong>Время:&ensp;</strong> {{ post.time }}<span>минут</span>
-            </div>
-          </div>
-          <div v-else>
-            <strong>Расстояние:&ensp;</strong><span>тут не далеко</span>
-          </div>
-          <div v-if="post.business_lunch">
-            <strong>Бизнес ланч:&ensp;</strong><span>да есть</span>
-            <div><strong>Цена:</strong> {{ post.price }}<span>руб</span></div>
-          </div>
-          <div v-else>
-            <strong>Бизнес ланч:&ensp;</strong><span>пока нет</span>
-          </div>
-        </div>
-      </li>
-    </ul>
+    <card-list :posts="posts" @select="selectPost" />
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import CardList from '@/components/CardList.vue';
+import MyButton from '@/components/UI/MyButton';
 
 export default {
+  components: {
+    CardList,
+    MyButton,
+  },
+
   data() {
     return {
       posts: [],
@@ -114,9 +69,8 @@ export default {
       const subject = 'Выбранный объект';
       const body = `Название кафе: ${selectedPost?.name}; Адрес: ${selectedPost?.address};`;
       const mailto_link = `mailto:${email}?subject=${subject}&body=${body}`;
-      // 'mailto:' + email + '?subject=' + subject + '&body=' + body;
-      console.log(mailto_link);
-      // window.open(mailto_link, 'emailWindow');
+      // console.log(mailto_link);
+      window.open(mailto_link, 'emailWindow');
     },
   },
 
@@ -127,118 +81,5 @@ export default {
 </script>
 
 <style lang="scss">
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-$green: rgb(0, 128, 128);
-$white: rgb(255, 255, 255);
-
-ul {
-  padding: 0;
-  list-style-type: none;
-}
-
-.app {
-  padding: 1rem;
-  color: $green;
-  font-family: sans-serif;
-  transition: all ease 0.8s;
-
-  .header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    margin: 1rem 0;
-
-    &:first-child {
-      color: red;
-    }
-
-    .header_btn {
-      margin: 1rem 1.5rem;
-      padding: 0.7rem 1.2rem;
-      background: none;
-      color: $green;
-      border: 1px solid $green;
-      transition: all ease 0.8s;
-      cursor: pointer;
-      border-radius: 0.5rem;
-      font-size: 1rem;
-      font-weight: bold;
-
-      &:hover {
-        box-shadow: 0 0 0.5rem 0.4rem rgba(0, 128, 128, 0.29);
-        background-color: $green;
-        color: $white;
-      }
-    }
-  }
-
-  .wrap_card {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-
-    .card {
-      position: relative;
-      overflow: hidden;
-      background: none;
-      cursor: pointer;
-      width: 21rem;
-      height: 21rem;
-      max-width: 21rem;
-      max-height: 21rem;
-      padding: 0;
-      text-align: center;
-      border-radius: 0.3rem;
-      transition: 0.7s ease-in-out;
-
-      .card_name {
-        line-height: 1.7rem;
-        font-size: 1.1rem;
-      }
-
-      .card__overlay {
-        position: absolute;
-        bottom: 0;
-        left: 4%;
-        right: 4%;
-        padding: 2%;
-        z-index: 1;
-        text-align: left;
-        background-color: rgb(0, 128, 128, 0.7);
-        transform: translateY(100%);
-        transition: all 0.7s ease-in-out;
-        border-radius: 0.3rem;
-        color: $white;
-      }
-
-      &:hover {
-        border-radius: 0;
-        box-shadow: 0 0 0.5rem 0.4rem rgba(0, 128, 128, 0.29);
-        .card__overlay {
-          transform: translateY(0);
-        }
-      }
-
-      .pic {
-        border-radius: 0.3rem;
-        transition: all 0.5s ease-in-out;
-        object-fit: cover;
-        height: 100%;
-        width: 100%;
-
-        &:hover {
-          transform: scale(1.009);
-          border-radius: 0;
-        }
-      }
-    }
-  }
-}
+@import '~@/assets/scss/main.scss';
 </style>
