@@ -2,12 +2,12 @@
   <div class="app">
     <div class="header">
       <h1>Выбирай лучшие кафе города:</h1>
-      <my-button @click="getRundomPost">случайный выбор кафе</my-button>
-      <my-button @click="fetchPosts">все варианты кафе</my-button>
-      <my-button @click="sendSelectedObject">
-        отправить выбранное на почту
-      </my-button>
     </div>
+    <navbar
+      @onGetRundomCard="getRundomCard"
+      @onFetchPosts="fetchPosts"
+      @onSendSelectedObject="sendSelectedObject"
+    />
     <card-list :posts="posts" @select="selectPost" />
   </div>
 </template>
@@ -15,10 +15,14 @@
 <script>
 import axios from 'axios';
 import CardList from '@/components/CardList.vue';
+import Navbar from '@/components/Navbar.vue';
 import MyButton from '@/components/UI/MyButton';
+import { fakeDataApi } from '@/components/helper/FakeApi';
+import { getTextCards, getRundomPost } from '@/components/helper/helpFunc';
 
 export default {
   components: {
+    Navbar,
     CardList,
     MyButton,
   },
@@ -27,6 +31,7 @@ export default {
     return {
       posts: [],
       selectedPostId: '',
+      rundomPost: [],
     };
   },
 
@@ -37,23 +42,16 @@ export default {
           'https://bandaumnikov.ru/api/test/site/get-index'
         );
         this.posts = response?.data?.data;
+        getTextCards(this.posts);
       } catch (e) {
         console.log('error message:', e.message);
+        this.posts = fakeDataApi;
       }
     },
 
-    async getRundomPost() {
-      try {
-        const id = Math.floor(Math.random() * this.posts.length);
-        const response = await axios.get(
-          `https://bandaumnikov.ru/api/test/site/get-view?id=${id}`
-        );
-        this.posts = [];
-        const post = response?.data?.data;
-        this.posts.push(post);
-      } catch (e) {
-        console.log('error message:', e.message);
-      }
+    getRundomCard() {
+      this.rundomPost = getRundomPost(this.posts);
+      console.log(this.rundomPost);
     },
 
     selectPost(id = null) {
@@ -64,13 +62,16 @@ export default {
       const selectedPost = this.posts.find(
         (post) => post.id === this.selectedPostId
       );
-      if (selectedPost === undefined) return;
+      if (selectedPost === undefined) {
+        console.log('карта не выбрана');
+        return;
+      }
       const email = 'example@example.com';
       const subject = 'Выбранный объект';
       const body = `Название кафе: ${selectedPost?.name}; Адрес: ${selectedPost?.address};`;
       const mailto_link = `mailto:${email}?subject=${subject}&body=${body}`;
-      // console.log(mailto_link);
-      window.open(mailto_link, 'emailWindow');
+      console.log(mailto_link);
+      // window.open(mailto_link, 'emailWindow');
     },
   },
 
@@ -81,5 +82,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@/assets/scss/main.scss';
+@import '~@/components/scss/main.scss';
 </style>
