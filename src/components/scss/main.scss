@@ -3,6 +3,7 @@
 // buttons
 @import './btn';
 @import './cardList';
+@import './navbar';
 
 * {
   margin: 0;
@@ -27,9 +28,6 @@ ul {
     align-items: center;
     justify-content: center;
     margin: 1rem 0;
-
-    &:first-child {
-      color: red;
-    }
+    color: red;
   }
 }

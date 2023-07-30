@@ -11,43 +11,21 @@
       <img class="pic" v-if="post.photo" :src="post.photo" alt="photo" />
       <img class="pic" v-else src="@/assets/noPhoto.webp" alt="photo" />
       <div class="card__overlay">
-        <div v-if="post.address">
-          <strong>Адрес:&ensp;</strong> {{ post.address }}
-        </div>
-        <div v-else>
-          <strong>Адрес:&ensp;</strong><span>10-й проезд 7-го выезда</span>
-        </div>
-        <div v-if="post.landmark">
-          <strong>Ориентир:&ensp;</strong> {{ post.landmark }}
-        </div>
-        <div v-else>
-          <strong>Ориентир:&ensp;</strong
-          ><span>дерево такое и памятник мужик сидячий</span>
-        </div>
-        <div v-if="post.cuisine">
-          <strong>Кухня:&ensp;</strong> {{ post.cuisine }}
-        </div>
-        <div v-else>
-          <strong>Кухня:&ensp;</strong
-          ><span>мишленовская от Ашота Мишленованяна</span>
-        </div>
-        <div v-if="post.distance">
+        <div><strong>Адрес:&ensp;</strong> {{ post.address }}</div>
+        <div><strong>Ориентир:&ensp;</strong> {{ post.landmark }}</div>
+        <div><strong>Кухня:&ensp;</strong> {{ post.cuisine }}</div>
+        <div>
           <strong>Расстояние:&ensp;</strong>{{ post.distance
           }}<span>метров</span>
-          <div>
-            <strong>Время:&ensp;</strong> {{ post.time }}<span>минут</span>
-          </div>
         </div>
-        <div v-else>
-          <strong>Расстояние:&ensp;</strong><span>тут не далеко</span>
+        <div>
+          <strong>Время:&ensp;</strong> {{ post.time }}<span>&ensp;минут</span>
         </div>
-        <div v-if="post.business_lunch">
-          <strong>Бизнес ланч:&ensp;</strong><span>да есть</span>
-          <div><strong>Цена:</strong> {{ post.price }}<span>руб</span></div>
+        <div>
+          <strong>Бизнес ланч:&ensp;</strong
+          ><span>{{ post.business_lunch }}</span>
         </div>
-        <div v-else>
-          <strong>Бизнес ланч:&ensp;</strong><span>пока нет</span>
-        </div>
+        <div><strong>Цена:</strong> {{ post.price }}<span>руб</span></div>
       </div>
     </li>
   </ul>
