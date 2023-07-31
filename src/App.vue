@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <div class="header">
-      <h1>Выбирай лучшие кафе города:</h1>
+      <h1>Выбирай лучшие кафе города!</h1>
     </div>
     <navbar
       @onGetRundomCard="getRundomCard"
@@ -18,7 +18,11 @@ import CardList from '@/components/CardList.vue';
 import Navbar from '@/components/Navbar.vue';
 import MyButton from '@/components/UI/MyButton';
 import { fakeDataApi } from '@/components/helper/FakeApi';
-import { getTextCards, getRundomPost } from '@/components/helper/helpFunc';
+import {
+  getTextCards,
+  getRundomPost,
+  sendSelectedCard,
+} from '@/components/helper/helpFunc';
 
 export default {
   components: {
@@ -51,7 +55,7 @@ export default {
 
     getRundomCard() {
       this.rundomPost = getRundomPost(this.posts);
-      console.log(this.rundomPost);
+      // console.log(this.rundomPost);
     },
 
     selectPost(id = null) {
@@ -59,19 +63,7 @@ export default {
     },
 
     sendSelectedObject() {
-      const selectedPost = this.posts.find(
-        (post) => post.id === this.selectedPostId
-      );
-      if (selectedPost === undefined) {
-        console.log('карта не выбрана');
-        return;
-      }
-      const email = 'example@example.com';
-      const subject = 'Выбранный объект';
-      const body = `Название кафе: ${selectedPost?.name}; Адрес: ${selectedPost?.address};`;
-      const mailto_link = `mailto:${email}?subject=${subject}&body=${body}`;
-      console.log(mailto_link);
-      // window.open(mailto_link, 'emailWindow');
+      sendSelectedCard(this.posts, this.selectedPostId);
     },
   },
 
