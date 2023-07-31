@@ -9,13 +9,7 @@
 </template>
 
 <script>
-import MyButton from '@/components/UI/MyButton';
-
 export default {
-  components: {
-    MyButton,
-  },
-
   data() {
     return {};
   },

@@ -36,3 +36,19 @@ export const getRundomPost = (arr = null) => {
   const rundomPost = arr && arr.find((post) => post.id === id);
   return rundomPost;
 };
+
+export const sendSelectedCard = (arr, id) => {
+  const selectedPost = arr.find(
+    (post) => post.id === id
+  );
+  if (selectedPost === undefined) {
+    console.log('карта не выбрана');
+    return;
+  }
+  const email = 'example@example.com';
+  const subject = 'Выбранный объект';
+  const body = `Название кафе: ${selectedPost?.name}; Адрес: ${selectedPost?.address};`;
+  const mailto_link = `mailto:${email}?subject=${subject}&body=${body}`;
+  console.log(mailto_link);
+  // window.open(mailto_link, 'emailWindow');
+}

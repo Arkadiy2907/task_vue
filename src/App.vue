@@ -1,14 +1,18 @@
 <template>
   <div class="app">
     <div class="header">
-      <h1>Выбирай лучшие кафе города:</h1>
+      <h1>Выбирай лучшие кафе города!</h1>
     </div>
     <navbar
       @onGetRundomCard="getRundomCard"
       @onFetchPosts="fetchPosts"
       @onSendSelectedObject="sendSelectedObject"
     />
-    <card-list :posts="posts" @select="selectPost" />
+    <card-list
+      :posts="posts"
+      @select="selectPost"
+      @remove="removePost"
+    />
   </div>
 </template>
 
@@ -16,15 +20,19 @@
 import axios from 'axios';
 import CardList from '@/components/CardList.vue';
 import Navbar from '@/components/Navbar.vue';
-import MyButton from '@/components/UI/MyButton';
+// import MyButton from '@/components/UI/MyButton';
 import { fakeDataApi } from '@/components/helper/FakeApi';
-import { getTextCards, getRundomPost } from '@/components/helper/helpFunc';
+import {
+  getTextCards,
+  getRundomPost,
+  sendSelectedCard,
+} from '@/components/helper/helpFunc';
 
 export default {
   components: {
     Navbar,
     CardList,
-    MyButton,
+    // MyButton,
   },
 
   data() {
@@ -43,6 +51,8 @@ export default {
         );
         this.posts = response?.data?.data;
         getTextCards(this.posts);
+        this.selectedPostId = '';
+        console.log(this.selectedPostId);
       } catch (e) {
         console.log('error message:', e.message);
         this.posts = fakeDataApi;
@@ -51,7 +61,7 @@ export default {
 
     getRundomCard() {
       this.rundomPost = getRundomPost(this.posts);
-      console.log(this.rundomPost);
+      // console.log(this.rundomPost);
     },
 
     selectPost(id = null) {
@@ -59,19 +69,11 @@ export default {
     },
 
     sendSelectedObject() {
-      const selectedPost = this.posts.find(
-        (post) => post.id === this.selectedPostId
-      );
-      if (selectedPost === undefined) {
-        console.log('карта не выбрана');
-        return;
-      }
-      const email = 'example@example.com';
-      const subject = 'Выбранный объект';
-      const body = `Название кафе: ${selectedPost?.name}; Адрес: ${selectedPost?.address};`;
-      const mailto_link = `mailto:${email}?subject=${subject}&body=${body}`;
-      console.log(mailto_link);
-      // window.open(mailto_link, 'emailWindow');
+      sendSelectedCard(this.posts, this.selectedPostId);
+    },
+
+    removePost(post) {
+      this.posts = this.posts.filter((el) => el.id !== post.id);
     },
   },
 

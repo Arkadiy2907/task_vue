@@ -2,6 +2,7 @@
 @import './global/variables';
 // buttons
 @import './btn';
+@import './close';
 @import './cardList';
 @import './navbar';
 
@@ -9,11 +10,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-ul {
-  padding: 0;
-  list-style-type: none;
 }
 
 .app {
