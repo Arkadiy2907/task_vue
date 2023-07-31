@@ -8,7 +8,11 @@
       @onFetchPosts="fetchPosts"
       @onSendSelectedObject="sendSelectedObject"
     />
-    <card-list :posts="posts" @select="selectPost" />
+    <card-list
+      :posts="posts"
+      @select="selectPost"
+      @remove="removePost"
+    />
   </div>
 </template>
 
@@ -16,7 +20,7 @@
 import axios from 'axios';
 import CardList from '@/components/CardList.vue';
 import Navbar from '@/components/Navbar.vue';
-import MyButton from '@/components/UI/MyButton';
+// import MyButton from '@/components/UI/MyButton';
 import { fakeDataApi } from '@/components/helper/FakeApi';
 import {
   getTextCards,
@@ -28,7 +32,7 @@ export default {
   components: {
     Navbar,
     CardList,
-    MyButton,
+    // MyButton,
   },
 
   data() {
@@ -47,6 +51,8 @@ export default {
         );
         this.posts = response?.data?.data;
         getTextCards(this.posts);
+        this.selectedPostId = '';
+        console.log(this.selectedPostId);
       } catch (e) {
         console.log('error message:', e.message);
         this.posts = fakeDataApi;
@@ -64,6 +70,10 @@ export default {
 
     sendSelectedObject() {
       sendSelectedCard(this.posts, this.selectedPostId);
+    },
+
+    removePost(post) {
+      this.posts = this.posts.filter((el) => el.id !== post.id);
     },
   },
 

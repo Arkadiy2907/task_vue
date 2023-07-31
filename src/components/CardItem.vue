@@ -1,6 +1,7 @@
 <template>
   <div class="card">
     <h2 class="card_name">{{ post.name }}</h2>
+    <my-close @click="$emit('remove', post)" />
     <img class="pic" v-if="post.photo" :src="post.photo" alt="photo" />
     <img class="pic" v-else src="@/assets/noPhoto.webp" alt="photo" />
     <div class="card__overlay">

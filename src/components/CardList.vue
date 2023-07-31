@@ -6,6 +6,7 @@
       @click="selectPost(post.id)"
       :class="{ selected: selectedPost === post.id }"
       :post="post"
+      @remove="$emit('remove', post)"
     >
     </card-item>
   </div>
@@ -38,6 +39,9 @@ export default {
       } else {
         this.$emit('select', id);
         this.selectedPost = id;
+        setTimeout(() => {
+          this.selectedPost = null;
+        }, 3000);
       }
     },
   },
