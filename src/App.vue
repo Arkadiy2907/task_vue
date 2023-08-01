@@ -12,7 +12,7 @@
   </div>
   <my-dialog v-model:show="dialogVisible">
     <h4>pppppp</h4>
-    <card-item :post="rundomPost"></card-item>
+    <!-- <card-item :post="rundomPost"></card-item> -->
   </my-dialog>
 </template>
 
@@ -28,6 +28,8 @@ import {
   getRundomPost,
   sendSelectedCard,
 } from '@/components/helper/helpFunc';
+import { isProxy, toRaw } from 'vue';
+// let rawData = someData;
 
 export default {
   components: {
@@ -48,27 +50,46 @@ export default {
 
   methods: {
     async fetchPosts() {
-      try {
-        const response = await axios.get(
-          'https://bandaumnikov.ru/api/test/site/get-index'
-        );
-        this.posts = response?.data?.data;
-        getTextCards(this.posts);
-        this.selectedPostId = '';
-        console.log(this.selectedPostId);
-      } catch (e) {
-        console.log('error message:', e.message);
-        this.posts = fakeDataApi;
-      }
+      // try {
+      //   const response = await axios.get(
+      //     'https://bandaumnikov.ru/api/test/site/get-index'
+      //   );
+      //   this.posts = response?.data?.data;
+      //   getTextCards(this.posts);
+      //   // console.log(this.posts);
+      //   this.selectedPostId = '';
+      //   // console.log(this.selectedPostId);
+      // } catch (e) {
+      //   console.log('error message:', e.message);
+      //   this.posts = fakeDataApi;
+      // }
+      fetch('https://bandaumnikov.ru/api/test/site/get-index')
+        .then((response) => response.json())
+        .then((result) => {
+          this.posts = JSON.parse(result);
+          console.log(this.posts);
+        })
+        .catch((error) => {
+          console.error(error);
+          this.posts = fakeDataApi;
+        });
     },
 
     getRundomCard() {
       this.rundomPost = getRundomPost(this.posts);
-      this.rundomPost = getTextCards(this.rundomPost);
+      let arr = [JSON.parse(JSON.stringify(this.rundomPost))];
+
+      // let rawData = arr;
+
+      // if (isProxy(arr)) {
+      //   rawData = toRaw(arr);
+      // }
+
+      this.rundomPost = getTextCards(arr);
       // showDialog();
       // this.dialogVisible = true;
 
-      console.log(this.rundomPost);
+      console.log(arr);
     },
 
     selectPost(id = null) {
