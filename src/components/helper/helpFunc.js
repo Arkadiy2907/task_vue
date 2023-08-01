@@ -1,4 +1,8 @@
 export const getTextCards = arr => {
+  if (!Array.isArray(arr)) {
+    console.log('не массив');
+    return;
+  }
   arr.forEach((el) => {
     if (el.address !== '') {
       el.address;

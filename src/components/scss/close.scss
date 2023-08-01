@@ -11,7 +11,7 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: 1.5rem 1.5rem;
-  background-color: rgb(255, 0, 0);
+  background-color: $red;
   -webkit-mask: url('@/assets/close.svg');
   mask: url('@/assets/close.svg');
   cursor: pointer;
@@ -19,6 +19,6 @@
 
   &:hover {
     transform: rotate(90deg);
-    background-color: green;
+    background-color: $green;
   }
 }

@@ -8,17 +8,17 @@
       @onFetchPosts="fetchPosts"
       @onSendSelectedObject="sendSelectedObject"
     />
-    <card-list
-      :posts="posts"
-      @select="selectPost"
-      @remove="removePost"
-    />
+    <card-list :posts="posts" @select="selectPost" @remove="removePost" />
   </div>
+  <my-dialog v-model:show="dialogVisible">
+    <card-item :post="rundomPost"></card-item>
+  </my-dialog>
 </template>
 
 <script>
 import axios from 'axios';
 import CardList from '@/components/CardList.vue';
+import CardItem from '@/components/CardItem.vue';
 import Navbar from '@/components/Navbar.vue';
 // import MyButton from '@/components/UI/MyButton';
 import { fakeDataApi } from '@/components/helper/FakeApi';
@@ -32,6 +32,7 @@ export default {
   components: {
     Navbar,
     CardList,
+    CardItem,
     // MyButton,
   },
 
@@ -40,6 +41,7 @@ export default {
       posts: [],
       selectedPostId: '',
       rundomPost: [],
+      dialogVisible: false,
     };
   },
 
@@ -61,7 +63,11 @@ export default {
 
     getRundomCard() {
       this.rundomPost = getRundomPost(this.posts);
-      // console.log(this.rundomPost);
+      this.rundomPost = getTextCards(this.rundomPost);
+      // showDialog();
+      // this.dialogVisible = true;
+
+      console.log(this.rundomPost);
     },
 
     selectPost(id = null) {
@@ -75,6 +81,10 @@ export default {
     removePost(post) {
       this.posts = this.posts.filter((el) => el.id !== post.id);
     },
+
+    // showDialog() {
+    //   this.dialogVisible = true;
+    // },
   },
 
   mounted() {

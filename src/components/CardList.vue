@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap_card">
+  <div class="wrap_card" v-show="posts.length > 0">
     <card-item
       v-for="post in posts"
       :key="post.id"
@@ -10,6 +10,7 @@
     >
     </card-item>
   </div>
+  <h2 v-show="posts.length === 0" style="color: red">Вариантов больше нет</h2>
 </template>
 
 <script>

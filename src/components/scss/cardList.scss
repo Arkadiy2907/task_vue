@@ -17,6 +17,8 @@
     text-align: center;
     border-radius: 0.3rem;
     transition: 0.7s ease-in-out;
+    border-top: 1px solid $white;
+    border-bottom: 1px solid $white;
 
     .card_name {
       line-height: 1.7rem;
@@ -61,7 +63,7 @@
   }
 
   .selected {
-    border-top: 1px solid red;
-    border-bottom: 1px solid red;
+    border-top: 1px solid $red;
+    border-bottom: 1px solid $red;
   }
 }
