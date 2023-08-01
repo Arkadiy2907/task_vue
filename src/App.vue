@@ -11,6 +11,7 @@
     <card-list :posts="posts" @select="selectPost" @remove="removePost" />
   </div>
   <my-dialog v-model:show="dialogVisible">
+    <h4>pppppp</h4>
     <card-item :post="rundomPost"></card-item>
   </my-dialog>
 </template>
