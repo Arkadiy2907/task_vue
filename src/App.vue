@@ -4,92 +4,82 @@
       <h1>Выбирай лучшие кафе города!</h1>
     </div>
     <navbar
-      @onGetRundomCard="getRundomCard"
+      @onGetRandomCard="getRandomCard"
       @onFetchPosts="fetchPosts"
       @onSendSelectedObject="sendSelectedObject"
     />
     <card-list :posts="posts" @select="selectPost" @remove="removePost" />
   </div>
   <my-dialog v-model:show="dialogVisible">
-    <h4>pppppp</h4>
-    <!-- <card-item :post="rundomPost"></card-item> -->
+    <card-item :post="randomPost"></card-item>
   </my-dialog>
 </template>
 
 <script>
-import axios from 'axios';
-import CardList from '@/components/CardList.vue';
-import CardItem from '@/components/CardItem.vue';
-import Navbar from '@/components/Navbar.vue';
-// import MyButton from '@/components/UI/MyButton';
-import { fakeDataApi } from '@/components/helper/FakeApi';
+import axios from "axios";
+import CardList from "@/components/CardList.vue";
+import CardItem from "@/components/CardItem.vue";
+import Navbar from "@/components/Navbar.vue";
+import { fakeDataApi } from "@/helper/FakeApi";
 import {
   getTextCards,
-  getRundomPost,
+  getRandomPost,
   sendSelectedCard,
-} from '@/components/helper/helpFunc';
-import { isProxy, toRaw } from 'vue';
-// let rawData = someData;
+  getTextOneCard,
+} from "@/helper/helpFunc";
 
 export default {
   components: {
     Navbar,
     CardList,
     CardItem,
-    // MyButton,
   },
 
   data() {
     return {
       posts: [],
-      selectedPostId: '',
-      rundomPost: [],
+      selectedPostId: "",
+      randomPost: [],
       dialogVisible: false,
     };
   },
 
   methods: {
     async fetchPosts() {
-      // try {
-      //   const response = await axios.get(
-      //     'https://bandaumnikov.ru/api/test/site/get-index'
-      //   );
-      //   this.posts = response?.data?.data;
-      //   getTextCards(this.posts);
-      //   // console.log(this.posts);
-      //   this.selectedPostId = '';
-      //   // console.log(this.selectedPostId);
-      // } catch (e) {
-      //   console.log('error message:', e.message);
-      //   this.posts = fakeDataApi;
-      // }
-      fetch('https://bandaumnikov.ru/api/test/site/get-index')
-        .then((response) => response.json())
-        .then((result) => {
-          this.posts = JSON.parse(result);
-          console.log(this.posts);
+      const url = "https://bandaumnikov.ru/api/test/site/get-index";
+
+      // fetch(url)
+      //   .then((response) => response.json())
+      //   .then((result) => {
+      //     this.posts = result.data;
+      //     // console.log(result.data);
+      //     getTextCards(this.posts);
+      //     this.selectedPostId = '';
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //     this.posts = fakeDataApi;
+      //     getTextCards(this.posts);
+      //     this.selectedPostId = '';
+      //   });
+
+      axios
+        .get(url)
+        .then((response) => {
+          this.posts = response?.data?.data;
+          getTextCards(this.posts);
         })
         .catch((error) => {
-          console.error(error);
+          console.log(error);
           this.posts = fakeDataApi;
+          getTextCards(this.posts);
         });
     },
 
-    getRundomCard() {
-      this.rundomPost = getRundomPost(this.posts);
-      let arr = [JSON.parse(JSON.stringify(this.rundomPost))];
-
-      // let rawData = arr;
-
-      // if (isProxy(arr)) {
-      //   rawData = toRaw(arr);
-      // }
-
-      this.rundomPost = getTextCards(arr);
-      // showDialog();
-      // this.dialogVisible = true;
-
-      console.log(arr);
+    getRandomCard() {
+      this.randomPost = getRandomPost(this.posts);
+      getTextOneCard(this.randomPost);
+      this.dialogVisible = true;
     },
 
     selectPost(id = null) {
@@ -103,10 +93,6 @@ export default {
     removePost(post) {
       this.posts = this.posts.filter((el) => el.id !== post.id);
     },
-
-    // showDialog() {
-    //   this.dialogVisible = true;
-    // },
   },
 
   mounted() {
@@ -116,5 +102,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@/components/scss/main.scss';
+@import "~@/components/scss/main.scss";
 </style>
