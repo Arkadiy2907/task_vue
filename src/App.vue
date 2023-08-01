@@ -45,7 +45,7 @@ export default {
   },
 
   methods: {
-    async fetchPosts() {
+    fetchPosts() {
       const url = "https://bandaumnikov.ru/api/test/site/get-index";
 
       // fetch(url)
@@ -70,7 +70,7 @@ export default {
           getTextCards(this.posts);
         })
         .catch((error) => {
-          console.log(error);
+          console.log("error", error);
           this.posts = fakeDataApi;
           getTextCards(this.posts);
         });

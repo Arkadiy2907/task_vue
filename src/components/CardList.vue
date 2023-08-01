@@ -10,11 +10,16 @@
     >
     </card-item>
   </div>
-  <h2 v-show="posts.length === 0" style="color: red">Вариантов больше нет</h2>
+  <h2
+    v-show="posts.length === 0"
+    style="color: red; display: flex; justify-content: center"
+  >
+    Вариантов больше нет
+  </h2>
 </template>
 
 <script>
-import CardItem from '@/components/CardItem.vue';
+import CardItem from "@/components/CardItem.vue";
 
 export default {
   components: { CardItem },
@@ -35,10 +40,10 @@ export default {
   methods: {
     selectPost(id) {
       if (this.selectedPost === id) {
-        this.$emit('select', null);
+        this.$emit("select", null);
         this.selectedPost = null;
       } else {
-        this.$emit('select', id);
+        this.$emit("select", id);
         this.selectedPost = id;
         setTimeout(() => {
           this.selectedPost = null;
