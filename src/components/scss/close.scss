@@ -16,7 +16,7 @@
   -webkit-mask: url('@/assets/close.svg');
   mask: url('@/assets/close.svg');
   cursor: pointer;
-  z-index: 11;
+  // z-index: 11;
 
   &:hover {
     transform: rotate(90deg);
