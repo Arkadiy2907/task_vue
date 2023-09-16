@@ -1,5 +1,8 @@
 <template>
-  <div class="app">
+  <div
+    class="wrap"
+    :style="dialogVisible ? 'overflow: hidden' : 'overflow: auto'"
+  >
     <div class="header">
       <h1>Выбирай лучшие кафе города!</h1>
     </div>
@@ -27,6 +30,7 @@ import {
   sendSelectedCard,
   getTextOneCard,
 } from "@/helper/helpFunc";
+import { fetchPosts } from "@/helper/api.js";
 
 export default {
   components: {
@@ -45,34 +49,28 @@ export default {
   },
 
   methods: {
+    // fetchPosts() {
+    //   const url = "https://bandaumnikov.ru/api/test/site/get-index";
+
+    //   axios
+    //     .get(url)
+    //     .then((response) => {
+    //       this.posts = response?.data?.data;
+    //       getTextCards(this.posts);
+    //     })
+    //     .catch((error) => {
+    //       console.log("error", error);
+    //       this.posts = fakeDataApi;
+    //       getTextCards(this.posts);
+    //     });
+    // },
     fetchPosts() {
-      const url = "https://bandaumnikov.ru/api/test/site/get-index";
-
-      // fetch(url)
-      //   .then((response) => response.json())
-      //   .then((result) => {
-      //     this.posts = result.data;
-      //     // console.log(result.data);
-      //     getTextCards(this.posts);
-      //     this.selectedPostId = '';
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //     this.posts = fakeDataApi;
-      //     getTextCards(this.posts);
-      //     this.selectedPostId = '';
-      //   });
-
-      axios
-        .get(url)
-        .then((response) => {
-          this.posts = response?.data?.data;
-          getTextCards(this.posts);
+      fetchPosts()
+        .then((posts) => {
+          this.posts = posts;
         })
         .catch((error) => {
           console.log("error", error);
-          this.posts = fakeDataApi;
-          getTextCards(this.posts);
         });
     },
 

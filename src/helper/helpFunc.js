@@ -1,3 +1,6 @@
+import axios from "axios";
+import { fakeDataApi } from "@/helper/FakeApi";
+
 export const getTextOneCard = (el) => {
   if (el.id !== "") {
     el.id;

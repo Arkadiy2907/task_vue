@@ -14,7 +14,7 @@
     v-show="posts.length === 0"
     style="color: red; display: flex; justify-content: center"
   >
-    Вариантов больше нет
+    Вариантов нет
   </h2>
 </template>
 
