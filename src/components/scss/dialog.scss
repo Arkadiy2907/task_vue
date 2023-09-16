@@ -1,0 +1,53 @@
+.dialog {
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  display: flex;
+
+  .dialog__content {
+    margin: auto;
+    background: $white;
+    border-radius: 1rem;
+    min-height: 3.5rem;
+    min-width: 20rem;
+    padding: 1.5rem;
+
+    .card_header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .card_name {
+        margin-left: 0.2rem;
+        line-height: 1.7rem;
+        font-size: 1.1rem;
+      }
+
+      .close {
+        visibility: hidden;
+      }
+    }
+
+    .pic {
+      border-radius: 0.3rem;
+      transition: all 0.5s ease-in-out;
+      max-width: 336px;
+      max-height: 334px;
+      width: 336px;
+      height: 334px;
+      object-fit: cover;
+
+      &:hover {
+        transform: scale(1.009);
+        border-radius: 0;
+      }
+    }
+
+    .card__overlay {
+      max-width: 336px;
+    }
+  }
+}

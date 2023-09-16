@@ -1,67 +1,83 @@
 <template>
-  <div class="app">
+  <div
+    class="wrap"
+    :style="dialogVisible ? 'overflow: hidden' : 'overflow: auto'"
+  >
     <div class="header">
       <h1>Выбирай лучшие кафе города!</h1>
     </div>
     <navbar
-      @onGetRundomCard="getRundomCard"
+      @onGetRandomCard="getRandomCard"
       @onFetchPosts="fetchPosts"
       @onSendSelectedObject="sendSelectedObject"
     />
-    <card-list
-      :posts="posts"
-      @select="selectPost"
-      @remove="removePost"
-    />
+    <card-list :posts="posts" @select="selectPost" @remove="removePost" />
   </div>
+  <my-dialog v-model:show="dialogVisible">
+    <card-item :post="randomPost"></card-item>
+  </my-dialog>
 </template>
 
 <script>
-import axios from 'axios';
-import CardList from '@/components/CardList.vue';
-import Navbar from '@/components/Navbar.vue';
-// import MyButton from '@/components/UI/MyButton';
-import { fakeDataApi } from '@/components/helper/FakeApi';
+import axios from "axios";
+import CardList from "@/components/CardList.vue";
+import CardItem from "@/components/CardItem.vue";
+import Navbar from "@/components/Navbar.vue";
+import { fakeDataApi } from "@/helper/FakeApi";
 import {
   getTextCards,
-  getRundomPost,
+  getRandomPost,
   sendSelectedCard,
-} from '@/components/helper/helpFunc';
+  getTextOneCard,
+} from "@/helper/helpFunc";
+import { fetchPosts } from "@/helper/api.js";
 
 export default {
   components: {
     Navbar,
     CardList,
-    // MyButton,
+    CardItem,
   },
 
   data() {
     return {
       posts: [],
-      selectedPostId: '',
-      rundomPost: [],
+      selectedPostId: "",
+      randomPost: [],
+      dialogVisible: false,
     };
   },
 
   methods: {
-    async fetchPosts() {
-      try {
-        const response = await axios.get(
-          'https://bandaumnikov.ru/api/test/site/get-index'
-        );
-        this.posts = response?.data?.data;
-        getTextCards(this.posts);
-        this.selectedPostId = '';
-        console.log(this.selectedPostId);
-      } catch (e) {
-        console.log('error message:', e.message);
-        this.posts = fakeDataApi;
-      }
+    // fetchPosts() {
+    //   const url = "https://bandaumnikov.ru/api/test/site/get-index";
+
+    //   axios
+    //     .get(url)
+    //     .then((response) => {
+    //       this.posts = response?.data?.data;
+    //       getTextCards(this.posts);
+    //     })
+    //     .catch((error) => {
+    //       console.log("error", error);
+    //       this.posts = fakeDataApi;
+    //       getTextCards(this.posts);
+    //     });
+    // },
+    fetchPosts() {
+      fetchPosts()
+        .then((posts) => {
+          this.posts = posts;
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
     },
 
-    getRundomCard() {
-      this.rundomPost = getRundomPost(this.posts);
-      // console.log(this.rundomPost);
+    getRandomCard() {
+      this.randomPost = getRandomPost(this.posts);
+      getTextOneCard(this.randomPost);
+      this.dialogVisible = true;
     },
 
     selectPost(id = null) {
@@ -84,5 +100,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@/components/scss/main.scss';
+@import "~@/components/scss/main.scss";
 </style>

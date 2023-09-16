@@ -1,10 +1,12 @@
-@import './global/normalize';
-@import './global/variables';
+@import "./global/normalize";
+@import "./global/variables";
 // buttons
-@import './btn';
-@import './close';
-@import './cardList';
-@import './navbar';
+@import "./btn";
+@import "./close";
+@import "./input";
+@import "./cardList";
+@import "./navbar";
+@import "./dialog";
 
 * {
   margin: 0;
@@ -12,11 +14,13 @@
   box-sizing: border-box;
 }
 
-.app {
+.wrap {
   padding: 1rem;
   color: $green;
   font-family: sans-serif;
   transition: all ease 0.8s;
+  background-color: $white;
+  max-height: 100vh;
 
   .header {
     display: flex;
@@ -24,6 +28,6 @@
     align-items: center;
     justify-content: center;
     margin: 1rem 0;
-    color: red;
+    color: $red;
   }
 }

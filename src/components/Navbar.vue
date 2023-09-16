@@ -1,6 +1,6 @@
 <template>
   <div class="navbar">
-    <my-button @click="getRundomCard">случайный выбор кафе</my-button>
+    <my-button @click="getRandomCard">случайный выбор кафе</my-button>
     <my-button @click="fetchPosts">все варианты кафе</my-button>
     <my-button @click="sendSelectedObject">
       отправить выбранное на почту
@@ -21,14 +21,14 @@ export default {
   },
 
   methods: {
-    getRundomCard() {
-      this.$emit('onGetRundomCard', null);
+    getRandomCard() {
+      this.$emit("onGetRandomCard", null);
     },
     fetchPosts() {
-      this.$emit('onFetchPosts', null);
+      this.$emit("onFetchPosts", null);
     },
     sendSelectedObject() {
-      this.$emit('onSendSelectedObject', null);
+      this.$emit("onSendSelectedObject", null);
     },
   },
 };
