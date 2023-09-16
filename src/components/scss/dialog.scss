@@ -25,6 +25,10 @@
         line-height: 1.7rem;
         font-size: 1.1rem;
       }
+
+      .close {
+        visibility: hidden;
+      }
     }
 
     .pic {
@@ -40,6 +44,10 @@
         transform: scale(1.009);
         border-radius: 0;
       }
+    }
+
+    .card__overlay {
+      max-width: 336px;
     }
   }
 }
