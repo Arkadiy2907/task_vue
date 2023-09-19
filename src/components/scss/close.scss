@@ -1,7 +1,4 @@
 .close {
-  // position: absolute;
-  // top: 2rem;
-  // right: 0.2rem;
   margin-right: 0.2rem;
   width: 1.2rem;
   display: block;
@@ -16,7 +13,6 @@
   -webkit-mask: url('@/assets/close.svg');
   mask: url('@/assets/close.svg');
   cursor: pointer;
-  // z-index: 11;
 
   &:hover {
     transform: rotate(90deg);
